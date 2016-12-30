@@ -27,7 +27,7 @@ RUN echo "apt-get -y install phpmyadmin" >> /etc/bash.bashrc
 RUN echo "/etc/init.d/apache2 restart" >> /etc/bash.bashrc
 
 RUN a2enmod rewrite
-RUN sed -e '/s/AllowOverride None/AllowOverride All/g' /etc/apache2/site-available/000-default.conf
+RUN sed "/s/AllowOverride None/AllowOverride All/g" /etc/apache2/site-available/000-default.conf
 
 RUN cat /etc/apache2/site-available/000-default.conf
 
