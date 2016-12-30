@@ -23,7 +23,7 @@ RUN service mysql restart
 # Prepare apache2 for PHPNuget
 RUN a2enmod rewrite
 ADD 000-default.conf /etc/apache2/site-available/000-default.conf
-ADD http://www.kendar.org/?p=/dotnet/phpnuget/phpnuget.zip phpnuget.zip
+RUN wget http://www.kendar.org/?p=/dotnet/phpnuget/phpnuget.zip -O phpnuget.zip
 RUN unzip phpnuget.zip
 RUN mv src /var/www/html
 
