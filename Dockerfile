@@ -26,6 +26,7 @@ ADD 000-default.conf /etc/apache2/site-available/000-default.conf
 RUN wget http://www.kendar.org/?p=/dotnet/phpnuget/phpnuget.zip -O phpnuget.zip
 RUN unzip phpnuget.zip
 RUN mv src /var/www/html
+RUN chown www-data:www-data -R /var/www/html
 
 
 # Lancement automatique de apache2
