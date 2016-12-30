@@ -16,18 +16,21 @@ RUN echo "phpmyadmin phpmyadmin/mysql/app-pass password tttttt" | debconf-set-se
 RUN echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 # Installation des paquets necessaires
-RUN apt-get -y update && apt-get install -y apache2 expect php5 php5-mysql mysql-server nano postfix
+RUN apt-get -y update && apt-get install -y apache2 expect php5 php5-mysql mysql-server nano postfix wget zip
 RUN service apache2 restart
 RUN service mysql restart
+
+# Prepare apache2 for PHPNuget
+RUN a2enmod rewrite
+ADD 000-default.conf /etc/apache2/site-available/000-default.conf
+ADD http://www.kendar.org/?p=/dotnet/phpnuget/phpnuget.zip phpnuget.zip
+RUN unzip phpnuget.zip
+RUN mv src /var/www/html
+
 
 # Lancement automatique de apache2
 RUN echo "/etc/init.d/apache2 restart" >> /etc/bash.bashrc
 RUN echo "/etc/init.d/mysql restart" >> /etc/bash.bashrc
 RUN echo "apt-get -y install phpmyadmin" >> /etc/bash.bashrc
 RUN echo "/etc/init.d/apache2 restart" >> /etc/bash.bashrc
-
-RUN a2enmod rewrite
-RUN sed "/s/AllowOverride None/AllowOverride All/g" /etc/apache2/site-available/000-default.conf
-
-RUN cat /etc/apache2/site-available/000-default.conf
 
