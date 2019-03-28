@@ -16,7 +16,7 @@ RUN echo "phpmyadmin phpmyadmin/mysql/app-pass password tttttt" | debconf-set-se
 RUN echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 # Installation des paquets necessaires
-RUN apt-get -y update && apt-get install -y apache2 expect php5 php5-mysql mysql-server nano postfix wget zip
+RUN apt-get -y update && apt-get install -y apache2 expect php php-mysql mysql-server nano postfix wget zip
 RUN service apache2 restart
 RUN service mysql restart
 
