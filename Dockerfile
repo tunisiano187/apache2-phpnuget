@@ -5,8 +5,8 @@ RUN echo "postfix postfix/mailname string docker.bowlman.org" | debconf-set-sele
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 
 # Pre configuration de mysql-serveur
-RUN echo "mysql-server mysql-server/root_password password tttttt" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password tttttt" | debconf-set-selections
+RUN echo "mariadb-server mariadb-server/root_password password tttttt" | debconf-set-selections
+RUN echo "mariadb-server mariadb-server/root_password_again password tttttt" | debconf-set-selections
 
 # Pre configuration de phpmyadmin
 #RUN echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
@@ -16,7 +16,7 @@ RUN echo "mysql-server mysql-server/root_password_again password tttttt" | debco
 #RUN echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 # Installation des paquets necessaires
-RUN apt-get -y update && apt-get install -y apache2 expect php php-mysql mysql-server nano postfix wget zip && service apache2 restart && service mysql restart
+RUN apt-get -y update && apt-get install -y apache2 expect php php-mysql mariadb-server nano postfix wget zip && service apache2 restart && service mysql restart
 
 # Prepare apache2 for PHPNuget
 RUN a2enmod rewrite
@@ -28,7 +28,6 @@ RUN chown www-data:www-data -R /var/www/html
 
 
 # Lancement automatique de apache2
-RUN echo "/etc/init.d/apache2 restart" >> /etc/bash.bashrc
-RUN echo "/etc/init.d/mysql restart" >> /etc/bash.bashrc
+RUN echo "/etc/init.d/mariadb restart" >> /etc/bash.bashrc
 #RUN echo "apt-get -y install phpmyadmin" >> /etc/bash.bashrc
 RUN echo "/etc/init.d/apache2 restart" >> /etc/bash.bashrc
