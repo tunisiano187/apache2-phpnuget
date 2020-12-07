@@ -22,7 +22,7 @@ RUN apt-get -y update && apt-get install -y apache2 expect php php-mysql mariadb
 RUN a2enmod rewrite
 ADD 000-default.conf /etc/apache2/site-available/000-default.conf
 RUN wget http://www.kendar.org/?p=/dotnet/phpnuget/phpnuget.zip -O phpnuget.zip
-RUN unzip phpnuget.zip -o /tmp/src
+RUN unzip phpnuget.zip -d /tmp/src
 RUN mv /tmp/src /var/www/html
 RUN chown www-data:www-data -R /var/www/html
 
